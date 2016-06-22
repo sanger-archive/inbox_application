@@ -24,11 +24,11 @@ RSpec.describe TeamsController, type: :controller do
   # Team. As you add validations to Team, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    {name:'My Happy Team'}
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {name:'Not! A# Valid~ name'}
   }
 
   # This should return the minimal set of values that should be in the session
@@ -47,7 +47,7 @@ RSpec.describe TeamsController, type: :controller do
   describe "GET #show" do
     it "assigns the requested team as @team" do
       team = Team.create! valid_attributes
-      get :show, {:id => team.to_param}, valid_session
+      get :show, {:key => team.to_param}, valid_session
       expect(assigns(:team)).to eq(team)
     end
   end
@@ -62,7 +62,7 @@ RSpec.describe TeamsController, type: :controller do
   describe "GET #edit" do
     it "assigns the requested team as @team" do
       team = Team.create! valid_attributes
-      get :edit, {:id => team.to_param}, valid_session
+      get :edit, {:key => team.to_param}, valid_session
       expect(assigns(:team)).to eq(team)
     end
   end
@@ -102,26 +102,27 @@ RSpec.describe TeamsController, type: :controller do
 
   describe "PUT #update" do
     context "with valid params" do
+
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        {name:'My Happier Team'}
       }
 
       it "updates the requested team" do
         team = Team.create! valid_attributes
-        put :update, {:id => team.to_param, :team => new_attributes}, valid_session
+        put :update, {:key => team.to_param, :team => new_attributes}, valid_session
         team.reload
         skip("Add assertions for updated state")
       end
 
       it "assigns the requested team as @team" do
         team = Team.create! valid_attributes
-        put :update, {:id => team.to_param, :team => valid_attributes}, valid_session
+        put :update, {:key => team.to_param, :team => valid_attributes}, valid_session
         expect(assigns(:team)).to eq(team)
       end
 
       it "redirects to the team" do
         team = Team.create! valid_attributes
-        put :update, {:id => team.to_param, :team => valid_attributes}, valid_session
+        put :update, {:key => team.to_param, :team => valid_attributes}, valid_session
         expect(response).to redirect_to(team)
       end
     end
@@ -129,13 +130,13 @@ RSpec.describe TeamsController, type: :controller do
     context "with invalid params" do
       it "assigns the team as @team" do
         team = Team.create! valid_attributes
-        put :update, {:id => team.to_param, :team => invalid_attributes}, valid_session
+        put :update, {:key => team.to_param, :team => invalid_attributes}, valid_session
         expect(assigns(:team)).to eq(team)
       end
 
       it "re-renders the 'edit' template" do
         team = Team.create! valid_attributes
-        put :update, {:id => team.to_param, :team => invalid_attributes}, valid_session
+        put :update, {:key => team.to_param, :team => invalid_attributes}, valid_session
         expect(response).to render_template("edit")
       end
     end
@@ -145,13 +146,13 @@ RSpec.describe TeamsController, type: :controller do
     it "destroys the requested team" do
       team = Team.create! valid_attributes
       expect {
-        delete :destroy, {:id => team.to_param}, valid_session
+        delete :destroy, {:key => team.to_param}, valid_session
       }.to change(Team, :count).by(-1)
     end
 
     it "redirects to the teams list" do
       team = Team.create! valid_attributes
-      delete :destroy, {:id => team.to_param}, valid_session
+      delete :destroy, {:key => team.to_param}, valid_session
       expect(response).to redirect_to(teams_url)
     end
   end

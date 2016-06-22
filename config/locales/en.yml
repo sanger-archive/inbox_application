@@ -23,3 +23,15 @@ en:
   hello: "Hello world"
   application:
     title: InboxApplication
+  activerecord:
+    models:
+      team: Team
+    attributes:
+      team:
+        key: "Name" # Translate key to name, as that's what the user actually sees
+    errors:
+      models:
+        team:
+          attributes:
+            name:
+             invalid: "can only contain letters, spaces and numbers"

@@ -17,11 +17,11 @@ ActiveRecord::Schema.define(version: 20160622113906) do
   enable_extension "plpgsql"
 
   create_table "teams", force: :cascade do |t|
-    t.string   "name",       null: false
+    t.string   "key",        null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  add_index "teams", ["name"], name: "index_teams_on_name", unique: true, using: :btree
+  add_index "teams", ["key"], name: "index_teams_on_key", unique: true, using: :btree
 
 end
