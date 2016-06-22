@@ -1,0 +1,8 @@
+== Inbox Application
+
+This application listens to an event message queue and builds inboxes for other applications.
+For more details on the events themselves see:
+
+https://github.com/sanger/event_warehouse
+
+= Getting Started
