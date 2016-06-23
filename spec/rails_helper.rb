@@ -54,4 +54,11 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  # Rails recommends sticking shared partials in application
+  # Unfortunately rspec doesn't follow the same process when testing views
+  config.before(:example, type: :view) do
+    view.lookup_context.prefixes << 'application'
+  end
+
 end

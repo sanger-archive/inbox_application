@@ -27,14 +27,9 @@ RSpec.describe Team, type: :model do
     expect(new_team.key).to eq('team-a')
   end
 
-  it "converts keys to names" do
-    new_team = Team.new(key:'team_a')
-    expect(new_team.name).to eq('Team A')
-  end
-
-  it "restricts special characters in team names" do
-    new_team = Team.new(name: 'Illegal! name')
+  it "requires a name that can be parameterized" do
+    new_team = Team.new(name: '!"$%')
     expect(new_team).to_not be_valid
-    expect(new_team.errors[:name]).to include("can only contain letters, spaces and numbers")
+    expect(new_team.errors[:name]).to include("must contain at least one letter or number")
   end
 end

@@ -1,16 +1,18 @@
 class Team < ActiveRecord::Base
   validates :key, presence: true, uniqueness: true
-  validates :name, format: { with: /\A[a-zA-Z0-9 ]+\z/ }
+  validates :name, format: { with: /[a-zA-Z0-9]+/ }
+  before_validation :generate_key, unless: :key?
 
   def to_param; key; end
 
-  def name=(name)
-    return name if name.blank?
-    @name = name
-    self.key = name.parameterize
+  def key
+    super || generate_key
   end
 
-  def name
-    @name ||= key && key.titleize
+  private
+
+  def generate_key
+    self.key = name && name.parameterize
   end
+
 end

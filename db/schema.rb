@@ -11,12 +11,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160622113906) do
+ActiveRecord::Schema.define(version: 20160623121608) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "inboxes", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.string   "key",        null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "inboxes", ["key"], name: "index_inboxes_on_key", unique: true, using: :btree
+
+  create_table "team_inboxes", force: :cascade do |t|
+    t.integer  "team_id"
+    t.integer  "inbox_id"
+    t.integer  "order",      null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "team_inboxes", ["inbox_id"], name: "index_team_inboxes_on_inbox_id", using: :btree
+  add_index "team_inboxes", ["team_id"], name: "index_team_inboxes_on_team_id", using: :btree
+
   create_table "teams", force: :cascade do |t|
+    t.string   "name",       null: false
     t.string   "key",        null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -24,4 +45,6 @@ ActiveRecord::Schema.define(version: 20160622113906) do
 
   add_index "teams", ["key"], name: "index_teams_on_key", unique: true, using: :btree
 
+  add_foreign_key "team_inboxes", "inboxes"
+  add_foreign_key "team_inboxes", "teams"
 end

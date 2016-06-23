@@ -34,7 +34,7 @@ en:
         team:
           record_invalid:
             one: "There was a problem when trying to save your team"
-            many: "There were %{count} problems when trying to save your team"
+            other: "There were %{count} problems when trying to save your team"
           attributes:
             name:
-             invalid: "can only contain letters, spaces and numbers"
+             invalid: "must contain at least one letter or number"
