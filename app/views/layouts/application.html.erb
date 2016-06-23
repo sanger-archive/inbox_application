@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title><%= t('application.title') %></title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-
-<%= yield %>
-
-</body>
+  <head>
+    <title><%= t('application.title') %></title>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <div class="container">
+      <%= render 'header' %>
+      <section class="page_content">
+        <%= render :partial => 'flash', collection: flash.to_a %>
+        <article class="interface">
+          <%= yield %>
+        </article>
+      </section>
+      <%= render 'footer' %>
+    </div>
+  </body>
 </html>

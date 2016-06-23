@@ -1,0 +1,12 @@
+<div class="alert alert-<%= flash_to_bootstrap(flash.first) %>">
+<strong><%= t(flash.first,scope:[:flashes,:titles], default: :unknown) %></strong>
+<% if flash.last.is_a?(Array) %>
+  <ul>
+    <% flash.last.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <%= flash.last %>
+<% end %>
+</div>
