@@ -9,14 +9,14 @@ RSpec.describe Team, type: :model do
     }
   }
 
-  it "enforces a unique key" do
-    existing_team = create :team
-    new_team = Team.new(valid_attributes.merge(key:existing_team.key))
-    expect(new_team).to_not be_valid
-    expect(new_team.errors[:key]).to include("has already been taken")
+  it "will auto generate a unique key" do
+    existing_team = create :team, name: 'example', key: 'example'
+    new_team = Team.new(name: 'example')
+    expect(new_team).to be_valid
+    expect(new_team.key).to_not eq('example')
   end
 
-  it "requires a unique key" do
+  it "requires a key" do
     new_team = Team.new(valid_attributes.merge(key: nil))
     expect(new_team).to_not be_valid
     expect(new_team.errors[:key]).to include("can't be blank")
