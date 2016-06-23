@@ -111,7 +111,8 @@ RSpec.describe TeamsController, type: :controller do
         team = Team.create! valid_attributes
         put :update, {:key => team.to_param, :team => new_attributes}, valid_session
         team.reload
-        skip("Add assertions for updated state")
+        expect(team.name).to eq('My Happier Team')
+        expect(team.key).to eq('my-happier-team')
       end
 
       it "assigns the requested team as @team" do

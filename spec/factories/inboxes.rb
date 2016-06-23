@@ -9,7 +9,7 @@ FactoryGirl.define do
   end
 
   factory :inbox do
-    display_name { generate :inbox_name }
+    name { generate :inbox_name }
     key { generate :inbox_key }
   end
 end

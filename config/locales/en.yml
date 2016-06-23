@@ -38,3 +38,10 @@ en:
           attributes:
             name:
              invalid: "must contain at least one letter or number"
+        inbox:
+          record_invalid:
+            one: "There was a problem when trying to save your inbox"
+            other: "There were %{count} problems when trying to save your inbox"
+          attributes:
+            name:
+             invalid: "must contain at least one letter or number"

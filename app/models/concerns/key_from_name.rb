@@ -1,7 +1,7 @@
 module KeyFromName
 
   def self.included(base)
-    base.before_validation :generate_key, unless: :key?, if: :name?
+    base.before_validation :generate_key, if: :name_changed?
     base.validates :key, presence: true, uniqueness: true
     base.validates :name, format: { with: /[a-zA-Z0-9]+/ }
   end
