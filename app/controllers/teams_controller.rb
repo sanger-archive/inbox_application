@@ -4,12 +4,13 @@ class TeamsController < ApplicationController
   # GET /teams
   # GET /teams.json
   def index
-    @teams = Team.all
+    @teams = Team.alphabetical
   end
 
   # GET /teams/1
   # GET /teams/1.json
   def show
+    @active_inbox = @team.inboxes.first
   end
 
   # GET /teams/new

@@ -23,6 +23,27 @@ en:
   hello: "Hello world"
   application:
     title: InboxApplication
+    creation_prompt:
+      title: There's nothing here...
+      body: You haven't created any %{model_name} yet. Once you do, you'll be able to see them here.
+      creation_button: Create %{model_name}
+  flashes:
+    titles:
+      notice: 'Great!'
+      alert: 'Sorry, there were some problems...'
+      unknown: 'Notice'
+  links:
+    teams_path: 'All Teams'
+    edit: 'Edit'
+  teams:
+    index:
+      pick_a_team: "Teams have their own collection of inboxes, which will show as separate tabs. Click a team below to view their inboxes."
+      new_team: "Add a new team"
+    edit_prompt:
+      title: There's nothing here...
+      body: |
+        This team doesn't have any inboxes set up. To begin adding some, or creating your own, click the button below.
+      edit_button: Set up this team
   activerecord:
     models:
       team: Team
@@ -45,3 +66,9 @@ en:
           attributes:
             name:
              invalid: "must contain at least one letter or number"
+        team_inbox:
+          record_invalid: There were problems associating and inbox with your team
+          attributes:
+            order:
+              blank: must be set for each inbox
+              taken: must be unique for each inbox

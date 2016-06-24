@@ -1,6 +1,9 @@
+<ol class="breadcrumb">
+  <li><%= link_to t(:teams_path,scope: :links), teams_path %></li>
+  <li><%= link_to @team.name, team_path(@team) %></li>
+  <li class="active"><%= t(:edit,scope: :links) %></li>
+</ol>
+
 <h1>Editing Team</h1>
 
 <%= render 'form' %>
-
-<%= link_to 'Show', @team %> |
-<%= link_to 'Back', teams_path %>

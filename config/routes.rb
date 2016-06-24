@@ -2,7 +2,9 @@ Rails.application.routes.draw do
 
   root 'teams#index'
 
-  resources :teams, param: :key
+  resources :teams, param: :key do
+    resources :inboxes, param: :key, controller: 'teams/inboxes'
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

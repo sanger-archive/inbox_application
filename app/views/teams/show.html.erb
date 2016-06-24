@@ -1,9 +1,18 @@
-<p id="notice"><%= notice %></p>
+<ol class="breadcrumb">
+  <li><%= link_to t(:teams_path,scope: :links), teams_path %></li>
+  <li class="active"><%= @team.name %></li>
+</ol>
 
-<p>
-  <strong>Name:</strong>
-  <%= @team.name %>
-</p>
-
-<%= link_to 'Edit', edit_team_path(@team) %> |
-<%= link_to 'Back', teams_path %>
+<h2><%= @team.name %> <small><%= link_to 'Edit', edit_team_path(@team) %></small></h2>
+<% if @team.inboxes.empty? %>
+  <%= render partial: 'edit_prompt', locals: { team: @team } %>
+<% else %>
+  <ol class="inbox-list nav nav-tabs nav-justified">
+    <% @team.inboxes.each_with_index do |inbox| %>
+      <li role="presentation" class="inbox-tab <%= if_active_tab(inbox,'active') %>"><%= link_to inbox.name, [@team,inbox] %></li>
+    <% end %>
+    <section class='current-inbox'>
+      <%= render partial: 'inboxes/inbox', locals: {inbox: @active_inbox } %>
+    </section>
+  </ol>
+<% end %>

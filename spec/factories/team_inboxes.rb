@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :team_inbox do
-    team nil
-    inbox nil
+    team
+    inbox
     order 1
   end
 end

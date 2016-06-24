@@ -32,4 +32,13 @@ RSpec.describe Team, type: :model do
     expect(new_team).to_not be_valid
     expect(new_team.errors[:name]).to include("must contain at least one letter or number")
   end
+
+  it 'shows returns inboxes in the specified order' do
+    team = create :team
+    inbox_last  = (create :team_inbox, team: team, order: 2).inbox
+    inbox_first = (create :team_inbox, team: team, order: 1).inbox
+    expect(team.inboxes).to include(inbox_first)
+    expect(team.inboxes).to include(inbox_last)
+    expect(team.inboxes.first).to eq(inbox_first)
+  end
 end
