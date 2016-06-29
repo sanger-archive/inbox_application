@@ -12,7 +12,7 @@
       <li role="presentation" class="inbox-tab <%= if_active_tab(inbox,'active') %>"><%= link_to inbox.name, [@team,inbox] %></li>
     <% end %>
     <section class='current-inbox'>
-      <%= render partial: 'inboxes/inbox', locals: {inbox: @active_inbox } %>
+      <%= render partial: 'inboxes/inbox', locals: {inbox: @active_inbox, items: @active_items } %>
     </section>
   </ol>
 <% end %>

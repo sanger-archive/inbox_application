@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20160629083141) do
   create_table "items", id: :uuid, default: "uuid_generate_v1()", force: :cascade do |t|
     t.string   "name",         null: false
     t.text     "details"
+    t.integer  "inbox_id",     null: false
     t.uuid     "batch_id"
     t.datetime "completed_at"
     t.datetime "created_at",   null: false

@@ -11,6 +11,7 @@ class TeamsController < ApplicationController
   # GET /teams/1.json
   def show
     @active_inbox = @team.inboxes.first
+    @active_items = []
   end
 
   # GET /teams/new

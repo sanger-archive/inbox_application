@@ -5,6 +5,9 @@ class TeamInbox < ActiveRecord::Base
   validates :order, presence: true
   validates_uniqueness_of :order, scope: :team
 
+  validates :team, presence: true
+  validates :inbox, presence: true
+
   delegate :name, :key, to: :inbox
 
   def key=(key)

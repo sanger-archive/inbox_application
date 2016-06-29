@@ -12,10 +12,38 @@
 # work with. They should NOT be run in production
 if Rails.env == 'development'
   ActiveRecord::Base.transaction do
-    t = Team.new(name:'Example Team')
+
+    u1 = User.create!(login:'example1')
+    u2 = User.create!(login:'example2')
+
+    t  = Team.new(name:'Example Team')
     i1 = Inbox.create!(name: 'Example Inbox A')
     i2 = Inbox.create!(name: 'Example Inbox B')
     t.team_inboxes.build([{inbox:i1,order:0},{inbox:i2,order:1}])
     t.save!
+
+    t2 = Team.new(name:'Other Team')
+    i3 = Inbox.create!(name: 'Other Inbox A')
+    i4 = Inbox.create!(name: 'Other Inbox B')
+    i5 = Inbox.create!(name: 'Other Inbox C')
+    t2.team_inboxes.build([{inbox:i1,order:0},{inbox:i2,order:1},{inbox:i3,order:2}])
+    t2.save!
+
+    details = {
+      :primary_details => {'Key A'=>'Value A'},
+      :secondary_details=>{'Key B'=>'Value B'},
+      :primary_associations => {'association'=>['one','two']},
+      :secondary_associations => {'association_2'=>['three','four']}
+    }
+
+    [i1,i2,i3,i4,i5].each do |inbox|
+      5.times {|i| Item.create!(name:"Unclaimed Item #{i}",details:details,inbox:inbox)}
+      b1 = Batch.create!(user:u1)
+      2.times {|i| Item.create!(name:"Batched Item #{i}",details:details,inbox:inbox,batch:b1)}
+      b2 = Batch.create!(user:u1)
+      3.times {|i| Item.create!(name:"Batched 2 Item #{i}",details:details,inbox:inbox,batch:b2)}
+      Item.create!(name:"Completed Item 1",details:details,inbox:inbox,batch:b2,completed_at:Time.now)
+      Item.create!(name:"Completed Item 2",details:details,inbox:inbox,completed_at:Time.now)
+    end
   end
 end

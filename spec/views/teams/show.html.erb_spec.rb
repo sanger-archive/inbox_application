@@ -19,6 +19,7 @@ RSpec.describe "teams/show", type: :view do
     inbox = t_i.inbox
     inbox2 = t_i2.inbox
     @active_inbox = inbox
+    @active_items = [create(:item)]
     render
     assert_select ".inbox-list>.inbox-tab", :text => inbox.name
     assert_select ".inbox-list>.inbox-tab", :text => inbox2.name

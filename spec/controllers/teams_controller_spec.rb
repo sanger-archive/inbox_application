@@ -17,6 +17,8 @@ RSpec.describe TeamsController, type: :controller do
   # in order to pass any filters (e.g. authentication) defined in
   # TeamsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
+  let(:team)  { create :team }
+  let(:inbox) { create :inbox }
 
   describe "GET #index" do
     it "assigns all teams as @teams" do
@@ -28,18 +30,20 @@ RSpec.describe TeamsController, type: :controller do
 
   describe "GET #show" do
     it "assigns the requested team as @team" do
-      team = create :team
       get :show, {:key => team.to_param}, valid_session
       expect(assigns(:team)).to eq(team)
     end
 
     it "assigns the first inbox as @active_inbox" do
-      team = create :team
-      inbox = create :inbox
       create :team_inbox, team: team, inbox: inbox
       get :show, {:key => team.to_param}, valid_session
       expect(assigns(:active_inbox)).to eq(inbox)
     end
+
+    it "assigns the pending items to @active_items" do
+
+    end
+
   end
 
   describe "GET #new" do

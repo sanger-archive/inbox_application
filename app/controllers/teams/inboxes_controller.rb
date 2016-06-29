@@ -7,12 +7,14 @@ class Teams::InboxesController < ApplicationController
   # GET /teams.json
   def index
     @active_inbox = @team.inboxes.first
+    @active_items = []
     render 'teams/show'
   end
 
   # GET /teams/1
   # GET /teams/1.json
   def show
+    @active_items = []
     render 'teams/show'
   end
 
