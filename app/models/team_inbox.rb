@@ -4,4 +4,11 @@ class TeamInbox < ActiveRecord::Base
 
   validates :order, presence: true
   validates_uniqueness_of :order, scope: :team
+
+  delegate :name, :key, to: :inbox
+
+  def key=(key)
+    self.inbox = Inbox.where(key:key).first
+  end
+
 end

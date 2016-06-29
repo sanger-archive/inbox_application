@@ -35,6 +35,7 @@ en:
   links:
     teams_path: 'All Teams'
     edit: 'Edit'
+    new: 'New'
   teams:
     index:
       pick_a_team: "Teams have their own collection of inboxes, which will show as separate tabs. Click a team below to view their inboxes."
@@ -44,6 +45,13 @@ en:
       body: |
         This team doesn't have any inboxes set up. To begin adding some, or creating your own, click the button below.
       edit_button: Set up this team
+    inbox_interface:
+      set_up_inboxes: 'Configure Inboxes'
+      team_inboxes: Team Inboxes
+      team_inboxes_help: Drag inboxes around to re-order them
+      other_inboxes: Other Inboxes
+      other_inboxes_help: This column lists inboxes not currently associated with your team. Drag them into the 'Team Inboxes' column to add them to the list.
+      update_inboxes: Update Inboxes
   activerecord:
     models:
       team: Team

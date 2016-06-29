@@ -1,3 +1,9 @@
 // Place all the styles related to the teams controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.sortable-target {
+  min-height: 50px;
+  min-width:100%;
+  background: linear-gradient( 0deg, white 85%, #eeeeee);
+}

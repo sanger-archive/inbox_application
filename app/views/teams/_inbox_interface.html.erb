@@ -1,0 +1,37 @@
+<%= form_for(team) do |f| %>
+
+    <h3><%= t('.set_up_inboxes') %></h3>
+    <div class="row">
+    <div class="col-sm-6"><div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= t('.team_inboxes') %></h3>
+      </div>
+      <div class="panel-body">
+        <p><%= t('.team_inboxes_help') %></p>
+      </div>
+    <!-- Do not adjust the whitespace arounf the list elements, as annoyingly white-space counts a content -->
+    <ol id="edit-inbox-list" class="sortable list-group sortable-target"><%= f.fields_for(:team_inboxes,include_id: false) do |ti| %>
+        <li id="inbox-<%= ti.object.key %>" class="list-group-item">
+          <span class='badge'><%= ti.index + 1 %></span><%= ti.object.name %> <small>(<%= ti.object.key %>)</small>
+          <%= ti.hidden_field :key %><%= ti.hidden_field :order, class:'order-field' %>
+        </li>
+      <% end %></ol>
+      <div class="panel-footer"><%= f.submit t('.update_inboxes'), class: 'btn btn-default' %></div>
+    </div></div>
+    <div class="col-sm-6"><div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title"><%= t('.other_inboxes') %></h3>
+      </div>
+      <div class="panel-body">
+          <p><%= t('.other_inboxes_help') %></p>
+        </div>
+    <ul id="other-inbox-list" class="sortable list-group sortable-target"><%= f.fields_for(:team_inboxes,other_inboxes,include_id: false) do |ti| %>
+        <li id="inbox-<%= ti.object.key %>" class="list-group-item">
+          <span class='badge'>#</span><%= ti.object.name %> <small>(<%= ti.object.key %>)</small>
+          <%= ti.hidden_field :key %><%= ti.hidden_field :order, value: nil, class:'order-field' %>
+        </li>
+      <% end %></ul>
+    </div></div>
+    </div>
+<% end %>
+

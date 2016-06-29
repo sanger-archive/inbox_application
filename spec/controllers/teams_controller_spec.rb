@@ -51,9 +51,13 @@ RSpec.describe TeamsController, type: :controller do
 
   describe "GET #edit" do
     it "assigns the requested team as @team" do
-      team = Team.create! valid_attributes
+      team = create :team_with_inbox
+      inbox = create :inbox
+      other_inbox = create :inbox
+      create :team_inbox, team: team, inbox: inbox
       get :edit, {:key => team.to_param}, valid_session
       expect(assigns(:team)).to eq(team)
+      expect(assigns(:other_inboxes)).to eq([other_inbox])
     end
   end
 
@@ -115,6 +119,24 @@ RSpec.describe TeamsController, type: :controller do
         team = Team.create! valid_attributes
         put :update, {:key => team.to_param, :team => valid_attributes}, valid_session
         expect(response).to redirect_to(team)
+      end
+
+      it "can update inbox orders" do
+        team = create :team_with_inbox, inbox_count: 2
+        original_excluded = create :inbox
+        original_first = team.inboxes.first
+        original_second = team.inboxes.last
+        team_inbox_parameters = {
+          "0"=>{"key"=>original_first.key, "order"=>""},
+          "1"=>{"key"=>original_second.key, "order"=>"1"},
+          "2"=>{"key"=>original_excluded.key, "order"=>"0"}
+        }
+        put :update, {:key => team.to_param, :team => {:team_inboxes_attributes => team_inbox_parameters}}, valid_session
+        team.reload
+        expect(response).to redirect_to(team)
+        expect(team.inboxes.first).to eq(original_excluded)
+        expect(team.inboxes.last).to eq(original_second)
+        expect(team.inboxes).to_not include(original_first)
       end
     end
 

@@ -6,6 +6,8 @@
 
 # Ignore bundler config.
 /.bundle
+# Ignore debug history
+/.byebug_history
 
 # Ignore the subl workspace
 inbox_application.sublime-workspace

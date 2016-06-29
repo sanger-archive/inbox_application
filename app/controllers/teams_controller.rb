@@ -20,6 +20,7 @@ class TeamsController < ApplicationController
 
   # GET /teams/1/edit
   def edit
+    @other_inboxes = Inbox.where(['id NOT IN (?)',@team.inboxes.map(&:id)])
   end
 
   # POST /teams
@@ -69,7 +70,8 @@ class TeamsController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
+    # Note that we use custom team_inboxes_attributes assignment
     def team_params
-      params.require(:team).permit(:name)
+      params.require(:team).permit(:name,{team_inboxes_attributes:[:key,:order]})
     end
 end
