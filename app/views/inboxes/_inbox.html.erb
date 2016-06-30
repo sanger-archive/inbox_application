@@ -1,3 +1,5 @@
-<ol id="item-list" class="list-group">
-  <%= render items %>
-</ol>
+<section class="inbox-panel">
+<ul id="item-list" class="list-group">
+  <%= render partial: "items/item", collection: items %>
+</ul>
+</section>

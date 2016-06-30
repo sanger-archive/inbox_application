@@ -4,7 +4,7 @@ class Team < ActiveRecord::Base
 
   scope :alphabetical, ->() { order(key: :asc) }
 
-  has_many :team_inboxes, ->() { order(order: :asc) }, inverse_of: :team
+  has_many :team_inboxes, ->() { order(order: :asc) }, inverse_of: :team, dependent: :destroy
   has_many :inboxes, through: :team_inboxes, inverse_of: :teams
 
   def team_inboxes_attributes=(attributes)

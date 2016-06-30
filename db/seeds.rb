@@ -36,14 +36,14 @@ if Rails.env == 'development'
       :secondary_associations => {'association_2'=>['three','four']}
     }
 
-    [i1,i2,i3,i4,i5].each do |inbox|
-      5.times {|i| Item.create!(name:"Unclaimed Item #{i}",details:details,inbox:inbox)}
+    [i1,i2,i3,i4,i5].each_with_index do |inbox,ibi|
+      5.times {|i| Item.create!(uuid: SecureRandom.uuid, name:"Unclaimed Item #{ibi}-#{i}",details:details,inbox:inbox)}
       b1 = Batch.create!(user:u1)
-      2.times {|i| Item.create!(name:"Batched Item #{i}",details:details,inbox:inbox,batch:b1)}
+      2.times {|i| Item.create!(uuid: SecureRandom.uuid, name:"Batched Item #{ibi}-#{i}",details:details,inbox:inbox,batch:b1)}
       b2 = Batch.create!(user:u1)
-      3.times {|i| Item.create!(name:"Batched 2 Item #{i}",details:details,inbox:inbox,batch:b2)}
-      Item.create!(name:"Completed Item 1",details:details,inbox:inbox,batch:b2,completed_at:Time.now)
-      Item.create!(name:"Completed Item 2",details:details,inbox:inbox,completed_at:Time.now)
+      3.times {|i| Item.create!(uuid: SecureRandom.uuid, name:"Batched 2 Item #{ibi}-#{i}",details:details,inbox:inbox,batch:b2)}
+      Item.create!(uuid: SecureRandom.uuid, name:"Completed Item #{ibi}-1",details:details,inbox:inbox,batch:b2,completed_at:Time.now)
+      Item.create!(uuid: SecureRandom.uuid, name:"Completed Item #{ibi}-2",details:details,inbox:inbox,completed_at:Time.now)
     end
   end
 end

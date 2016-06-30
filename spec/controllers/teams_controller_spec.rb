@@ -19,6 +19,7 @@ RSpec.describe TeamsController, type: :controller do
   let(:valid_session) { {} }
   let(:team)  { create :team }
   let(:inbox) { create :inbox }
+  let(:with_team_inbox) { create :team_inbox, team: team, inbox: inbox}
 
   describe "GET #index" do
     it "assigns all teams as @teams" do
@@ -35,13 +36,16 @@ RSpec.describe TeamsController, type: :controller do
     end
 
     it "assigns the first inbox as @active_inbox" do
-      create :team_inbox, team: team, inbox: inbox
+      with_team_inbox
       get :show, {:key => team.to_param}, valid_session
       expect(assigns(:active_inbox)).to eq(inbox)
     end
 
     it "assigns the pending items to @active_items" do
-
+      with_team_inbox
+      item = create :pending_item, inbox: inbox
+      get :show, {:key => team.to_param}, valid_session
+      expect(assigns(:active_items)).to eq([item])
     end
 
   end

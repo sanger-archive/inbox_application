@@ -23,6 +23,7 @@ RSpec.describe Teams::InboxesController, type: :controller do
       create :team_inbox, team: team, inbox: inbox
       get :index, {:team_key => team.to_param}, valid_session
       expect(assigns(:active_inbox)).to eq(inbox)
+      expect(assigns(:active_items)).to eq(inbox.items.pending)
     end
   end
 
@@ -39,10 +40,22 @@ RSpec.describe Teams::InboxesController, type: :controller do
       team = create :team
       inbox = create :inbox
       inbox2 = create :inbox
+      pending_item = create :pending_item, inbox: inbox
       create :team_inbox, team: team, inbox: inbox, order: 0
       create :team_inbox, team: team, inbox: inbox2, order: 1
       get :show, {:team_key => team.to_param, :key => inbox2.key}, valid_session
       expect(assigns(:active_inbox)).to eq(inbox2)
+      expect(assigns(:active_items)).to eq(inbox2.items.pending)
+    end
+
+    it "with a state parameter applies the expected filter" do
+      team = create :team
+      inbox = create :inbox
+      batched_item = create :batched_item, inbox: inbox
+      create :team_inbox, team: team, inbox: inbox, order: 0
+      get :show, {:team_key => team.to_param, :key => inbox.key, :state=> 'batched'}, valid_session
+      expect(assigns(:active_inbox)).to eq(inbox)
+      expect(assigns(:active_items)).to eq(inbox.items.batched)
     end
   end
 

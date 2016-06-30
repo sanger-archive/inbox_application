@@ -1,6 +1,8 @@
 class TeamsController < ApplicationController
   before_action :set_team, only: [:show, :edit, :update, :destroy]
 
+  DEFAULT_STATE = 'pending'
+
   # GET /teams
   # GET /teams.json
   def index
@@ -11,7 +13,7 @@ class TeamsController < ApplicationController
   # GET /teams/1.json
   def show
     @active_inbox = @team.inboxes.first
-    @active_items = []
+    @active_items = @active_inbox.present? ? @active_inbox.items.which_are(state_param) : []
   end
 
   # GET /teams/new
@@ -74,5 +76,9 @@ class TeamsController < ApplicationController
     # Note that we use custom team_inboxes_attributes assignment
     def team_params
       params.require(:team).permit(:name,{team_inboxes_attributes:[:key,:order]})
+    end
+
+    def state_param
+      params[:state]||DEFAULT_STATE
     end
 end

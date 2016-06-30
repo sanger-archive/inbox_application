@@ -34,19 +34,20 @@ ActiveRecord::Schema.define(version: 20160629083141) do
 
   add_index "inboxes", ["key"], name: "index_inboxes_on_key", unique: true, using: :btree
 
-  create_table "items", id: :uuid, default: "uuid_generate_v1()", force: :cascade do |t|
+  create_table "items", force: :cascade do |t|
+    t.uuid     "uuid",         null: false
     t.string   "name",         null: false
     t.text     "details"
     t.integer  "inbox_id",     null: false
-    t.uuid     "batch_id"
+    t.integer  "batch_id"
     t.datetime "completed_at"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
 
   create_table "team_inboxes", force: :cascade do |t|
-    t.integer  "team_id"
-    t.integer  "inbox_id"
+    t.integer  "team_id",    null: false
+    t.integer  "inbox_id",   null: false
     t.integer  "order",      null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -65,7 +66,7 @@ ActiveRecord::Schema.define(version: 20160629083141) do
   add_index "teams", ["key"], name: "index_teams_on_key", unique: true, using: :btree
 
   create_table "users", id: :uuid, default: "uuid_generate_v1()", force: :cascade do |t|
-    t.string   "login"
+    t.string   "login",      null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
