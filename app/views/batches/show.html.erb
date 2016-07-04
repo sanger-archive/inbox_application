@@ -1,0 +1,8 @@
+<h1>Batch <small><%= @batch.id %></small></h1>
+<dl>
+  <dt><%= Batch.human_attribute_name(:user) %></dt><dd><%= @batch.user.login %></dd>
+  <dt><%= Batch.human_attribute_name(:created_at) %></dt><dd><%= l(@batch.created_at, format: :long) %></dd>
+</dl>
+<ul id="item-list" class="list-group">
+  <%= render partial: "items/formless_item", collection: @batch.items %>
+</ul>

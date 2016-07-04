@@ -25,13 +25,15 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+# gem 'bcrypt', '~> 3.1.7
 
 # Use Puma as the app server
 gem 'puma', require: false
 
 # We need to talk to a message queue, we'll use bunny
 gem 'bunny', require: false
+
+gem 'sequencescape_search', github: 'sanger/sequencescape_search'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

@@ -10,6 +10,7 @@ class Teams::InboxesController < ApplicationController
   def index
     @active_inbox = @team.inboxes.first
     @active_items = @active_inbox ? @active_inbox.items.which_are(state_param) : []
+    @state = state_param
     render 'teams/show'
   end
 
@@ -17,6 +18,7 @@ class Teams::InboxesController < ApplicationController
   # GET /teams/1.json
   def show
     @active_items = @active_inbox.items.which_are(state_param)
+    @state = state_param
     render 'teams/show'
   end
 

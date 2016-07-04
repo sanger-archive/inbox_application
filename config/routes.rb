@@ -5,6 +5,12 @@ Rails.application.routes.draw do
   resources :teams, param: :key do
     resources :inboxes, param: :key, controller: 'teams/inboxes'
   end
+
+  resources :inboxes, param: :key do
+    resources :batches, only: [:create,:show,:destroy]
+  end
+
+  resources :batches, only: [:create,:show,:destroy]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

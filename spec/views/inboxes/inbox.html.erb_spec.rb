@@ -12,8 +12,8 @@ RSpec.describe "inboxes/_inbox", type: :view do
 
   it "renders the inbox view" do
     render partial: "inboxes/inbox", locals: { inbox: inbox, items: items }
-    assert_select "#item-list>li", :text => item_a.name, :count => 1
-    assert_select "#item-list>li", :text => item_b.name, :count => 1
+    assert_select "#item-list>li h4", :text => item_a.name, :count => 1
+    assert_select "#item-list>li h4", :text => item_b.name, :count => 1
   end
 
 end

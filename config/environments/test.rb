@@ -39,4 +39,9 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+  proxy = ENV.fetch('FARADAY_PROXY','')
+  sequencescape_uri = ENV.fetch('SEQUENCESCAPE_URI','http://localhost:3000/api/1')
+  sequencescape_headers = { 'ACCEPT'=>'application/json', 'x-sequencescape-client-id'=>'development', 'Content-Type'=>' application/json'}
+
+  config.api_root = Faraday.new(sequencescape_uri, proxy: proxy, headers: sequencescape_headers )
 end

@@ -10,3 +10,18 @@
 .page_content {
   min-height: 60vh;
 }
+
+dl.dl-inline {
+  display: inline;
+
+  dd {
+    display: inline-block;
+  }
+  dt::after {
+    content: ': '
+  }
+  dt {
+    display: inline;
+    margin-left: 0.5em;
+  }
+}

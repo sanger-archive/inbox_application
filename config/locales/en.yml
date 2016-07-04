@@ -52,6 +52,13 @@ en:
       other_inboxes: Other Inboxes
       other_inboxes_help: This column lists inboxes not currently associated with your team. Drag them into the 'Team Inboxes' column to add them to the list.
       update_inboxes: Update Inboxes
+  batches:
+    destroy:
+      success: 'Your batch has been destroyed and the items returned to the inbox'
+      failure: 'Could not destroy your batch: %{errors}'
+    create:
+      success: 'Batch was created'
+      failure: 'Could not create your batch: %{errors}'
   activerecord:
     models:
       team: Team
@@ -80,3 +87,7 @@ en:
             order:
               blank: must be set for each inbox
               taken: must be unique for each inbox
+        batch:
+          attributes:
+            user_swipecard:
+              unrecognized: could not be found

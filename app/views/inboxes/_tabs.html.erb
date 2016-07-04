@@ -1,0 +1,16 @@
+<nav>
+  <ol class="inbox-list nav nav-tabs">
+    <% inboxes.each_with_index do |inbox| %>
+      <li role="presentation" class="inbox-tab <%= if_active_tab(inbox,'active') %> dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+          <%= inbox.name %> <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <li><%= link_to t(:pending,scope: :links), [team,inbox,state:'pending'] %></li>
+          <li><%= link_to t(:batched,scope: :links), [team,inbox, state:'batched'] %></li>
+          <li><%= link_to t(:completed,scope: :links), [team,inbox, state:'completed' ]%></li>
+        </ul>
+      </li>
+    <% end %>
+  </ol>
+</nav>

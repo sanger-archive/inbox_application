@@ -7,12 +7,9 @@
 <% if @team.inboxes.empty? %>
   <%= render partial: 'edit_prompt', locals: { team: @team } %>
 <% else %>
-  <ol class="inbox-list nav nav-tabs nav-justified">
-    <% @team.inboxes.each_with_index do |inbox| %>
-      <li role="presentation" class="inbox-tab <%= if_active_tab(inbox,'active') %>"><%= link_to inbox.name, [@team,inbox] %></li>
-    <% end %>
-    <section class='current-inbox'>
-      <%= render partial: 'inboxes/inbox', locals: {inbox: @active_inbox, items: @active_items } %>
-    </section>
-  </ol>
+  <%= render partial: 'inboxes/tabs', locals: {inboxes: @team.inboxes, team: @team } %>
+  <section class='current-inbox'>
+    <h3><%= @state.titleize %></h3>
+    <%= render partial: 'inboxes/inbox', locals: {inbox: @active_inbox, items: @active_items } %>
+  </section>
 <% end %>

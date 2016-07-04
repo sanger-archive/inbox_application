@@ -14,6 +14,7 @@ class TeamsController < ApplicationController
   def show
     @active_inbox = @team.inboxes.first
     @active_items = @active_inbox.present? ? @active_inbox.items.which_are(state_param) : []
+    @state = state_param
   end
 
   # GET /teams/new
