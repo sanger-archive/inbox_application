@@ -1,4 +1,4 @@
-class Item < ActiveRecord::Base
+class Item < ApplicationRecord
   belongs_to :batch, inverse_of: :items
   belongs_to :inbox, inverse_of: :items
 

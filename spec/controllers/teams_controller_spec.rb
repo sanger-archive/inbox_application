@@ -24,27 +24,27 @@ RSpec.describe TeamsController, type: :controller do
   describe "GET #index" do
     it "assigns all teams as @teams" do
       team = Team.create! valid_attributes
-      get :index, {}, valid_session
+      get :index, params: {}, session: valid_session
       expect(assigns(:teams)).to eq([team])
     end
   end
 
   describe "GET #show" do
     it "assigns the requested team as @team" do
-      get :show, {:key => team.to_param}, valid_session
+      get :show, params: {:key => team.to_param}, session: valid_session
       expect(assigns(:team)).to eq(team)
     end
 
     it "assigns the first inbox as @active_inbox" do
       with_team_inbox
-      get :show, {:key => team.to_param}, valid_session
+      get :show, params: {:key => team.to_param}, session: valid_session
       expect(assigns(:active_inbox)).to eq(inbox)
     end
 
     it "assigns the pending items to @active_items" do
       with_team_inbox
       item = create :pending_item, inbox: inbox
-      get :show, {:key => team.to_param}, valid_session
+      get :show, params: {:key => team.to_param}, session: valid_session
       expect(assigns(:active_items)).to eq([item])
     end
 
@@ -52,7 +52,7 @@ RSpec.describe TeamsController, type: :controller do
 
   describe "GET #new" do
     it "assigns a new team as @team" do
-      get :new, {}, valid_session
+      get :new, params: {}, session: valid_session
       expect(assigns(:team)).to be_a_new(Team)
     end
   end
@@ -63,7 +63,7 @@ RSpec.describe TeamsController, type: :controller do
       inbox = create :inbox
       other_inbox = create :inbox
       create :team_inbox, team: team, inbox: inbox
-      get :edit, {:key => team.to_param}, valid_session
+      get :edit, params: {:key => team.to_param}, session: valid_session
       expect(assigns(:team)).to eq(team)
       expect(assigns(:other_inboxes)).to eq([other_inbox])
     end
@@ -73,30 +73,30 @@ RSpec.describe TeamsController, type: :controller do
     context "with valid params" do
       it "creates a new Team" do
         expect {
-          post :create, {:team => valid_attributes}, valid_session
+          post :create, params: {:team => valid_attributes}, session: valid_session
         }.to change(Team, :count).by(1)
       end
 
       it "assigns a newly created team as @team" do
-        post :create, {:team => valid_attributes}, valid_session
+        post :create, params: {:team => valid_attributes}, session: valid_session
         expect(assigns(:team)).to be_a(Team)
         expect(assigns(:team)).to be_persisted
       end
 
       it "redirects to the created team" do
-        post :create, {:team => valid_attributes}, valid_session
+        post :create, params: {:team => valid_attributes}, session: valid_session
         expect(response).to redirect_to(Team.last)
       end
     end
 
     context "with invalid params" do
       it "assigns a newly created but unsaved team as @team" do
-        post :create, {:team => invalid_attributes}, valid_session
+        post :create, params: {:team => invalid_attributes}, session: valid_session
         expect(assigns(:team)).to be_a_new(Team)
       end
 
       it "re-renders the 'new' template" do
-        post :create, {:team => invalid_attributes}, valid_session
+        post :create, params: {:team => invalid_attributes}, session: valid_session
         expect(response).to render_template("new")
       end
     end
@@ -111,7 +111,7 @@ RSpec.describe TeamsController, type: :controller do
 
       it "updates the requested team" do
         team = Team.create! valid_attributes
-        put :update, {:key => team.to_param, :team => new_attributes}, valid_session
+        put :update, params: {:key => team.to_param, :team => new_attributes}, session: valid_session
         team.reload
         expect(team.name).to eq('My Happier Team')
         expect(team.key).to eq('my-happier-team')
@@ -119,13 +119,13 @@ RSpec.describe TeamsController, type: :controller do
 
       it "assigns the requested team as @team" do
         team = Team.create! valid_attributes
-        put :update, {:key => team.to_param, :team => valid_attributes}, valid_session
+        put :update, params: {:key => team.to_param, :team => valid_attributes}, session: valid_session
         expect(assigns(:team)).to eq(team)
       end
 
       it "redirects to the team" do
         team = Team.create! valid_attributes
-        put :update, {:key => team.to_param, :team => valid_attributes}, valid_session
+        put :update, params: {:key => team.to_param, :team => valid_attributes}, session: valid_session
         expect(response).to redirect_to(team)
       end
 
@@ -139,7 +139,7 @@ RSpec.describe TeamsController, type: :controller do
           "1"=>{"key"=>original_second.key, "order"=>"1"},
           "2"=>{"key"=>original_excluded.key, "order"=>"0"}
         }
-        put :update, {:key => team.to_param, :team => {:team_inboxes_attributes => team_inbox_parameters}}, valid_session
+        put :update, params: {:key => team.to_param, :team => {:team_inboxes_attributes => team_inbox_parameters}}, session: valid_session
         team.reload
         expect(response).to redirect_to(team)
         expect(team.inboxes.first).to eq(original_excluded)
@@ -151,13 +151,13 @@ RSpec.describe TeamsController, type: :controller do
     context "with invalid params" do
       it "assigns the team as @team" do
         team = Team.create! valid_attributes
-        put :update, {:key => team.to_param, :team => invalid_attributes}, valid_session
+        put :update, params: {:key => team.to_param, :team => invalid_attributes}, session: valid_session
         expect(assigns(:team)).to eq(team)
       end
 
       it "re-renders the 'edit' template" do
         team = Team.create! valid_attributes
-        put :update, {:key => team.to_param, :team => invalid_attributes}, valid_session
+        put :update, params: {:key => team.to_param, :team => invalid_attributes}, session: valid_session
         expect(response).to render_template("edit")
       end
     end
@@ -167,13 +167,13 @@ RSpec.describe TeamsController, type: :controller do
     it "destroys the requested team" do
       team = Team.create! valid_attributes
       expect {
-        delete :destroy, {:key => team.to_param}, valid_session
+        delete :destroy, params: {:key => team.to_param}, session: valid_session
       }.to change(Team, :count).by(-1)
     end
 
     it "redirects to the teams list" do
       team = Team.create! valid_attributes
-      delete :destroy, {:key => team.to_param}, valid_session
+      delete :destroy, params: {:key => team.to_param}, session: valid_session
       expect(response).to redirect_to(teams_url)
     end
   end

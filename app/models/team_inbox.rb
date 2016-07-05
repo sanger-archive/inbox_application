@@ -1,4 +1,4 @@
-class TeamInbox < ActiveRecord::Base
+class TeamInbox < ApplicationRecord
   belongs_to :team, inverse_of: :team_inboxes
   belongs_to :inbox, inverse_of: :team_inboxes
 

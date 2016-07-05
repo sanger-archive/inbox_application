@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.6'
+gem 'rails', '5.0.0'
 gem 'postgresql'
 
 # Use SCSS for stylesheets
@@ -10,6 +10,10 @@ gem 'sass-rails', '~> 5.0', require: false
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0', require: false
 gem 'bootstrap-sass'
+
+# Do using coffee script ourselves, but it seems that some of the standard rails assets use it.
+gem 'coffee-rails'
+
 # See https://github.com/rails/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby, require: false
 
@@ -38,6 +42,7 @@ gem 'sequencescape_search', github: 'sanger/sequencescape_search'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', require: false
+  gem 'rails-controller-testing'
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'database_cleaner'

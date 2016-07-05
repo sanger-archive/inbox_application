@@ -1,11 +1,11 @@
-class Batch < ActiveRecord::Base
+class Batch < ApplicationRecord
   belongs_to :user
   has_many :items, inverse_of: :batch, dependent: :nullify
 
   attr_reader :user_swipecard
 
   # In practice, this will almost always be just one inbox.
-  has_many :inboxes, ->() { uniq }, through: :items
+  has_many :inboxes, ->() { distinct }, through: :items
 
   validates :user, presence: true
   # If we don't have a user, check that we at least have a swipecard

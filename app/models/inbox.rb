@@ -1,4 +1,4 @@
-class Inbox < ActiveRecord::Base
+class Inbox < ApplicationRecord
 
   include KeyFromName
 

@@ -29,18 +29,18 @@ RSpec.describe BatchesController, type: :controller do
   describe "post #create" do
     it "creates a new batch" do
       expect {
-        post :create, { batch: valid_attributes }, valid_session
+        post :create, params: { batch: valid_attributes }, session: valid_session
       }.to change(Batch, :count).by(1)
     end
 
     it "redirects to the batch page" do
-      post :create, {:batch => valid_attributes}, valid_session
+      post :create, params: {:batch => valid_attributes}, session: valid_session
       expect(assigns(:batch)).to be_a(Batch)
       expect(response).to redirect_to(assigns(:batch))
     end
 
     it "puts only included items in the batch" do
-      post :create, {batch: valid_attributes }, valid_session
+      post :create, params: {batch: valid_attributes }, session: valid_session
       expect(assigns(:batch).items).to include(included_item)
       expect(assigns(:batch).items).to_not include(unincluded_item)
     end
@@ -49,7 +49,7 @@ RSpec.describe BatchesController, type: :controller do
       inbox = create :inbox
       request.env["HTTP_REFERER"] = inbox_path(inbox)
       expect {
-        post :create, { batch: invalid_attributes }, valid_session
+        post :create, params: { batch: invalid_attributes }, session: valid_session
         expect(response).to redirect_to(inbox)
       }.to change(Batch, :count).by(0)
     end
@@ -58,7 +58,7 @@ RSpec.describe BatchesController, type: :controller do
   describe "GET #show" do
     it "returns http success" do
       batch = create :batch
-      get :show, id: batch.id
+      get :show, params: { id: batch.id }
       expect(response).to have_http_status(:success)
       expect(assigns(:batch)).to eq(batch)
     end
@@ -69,7 +69,7 @@ RSpec.describe BatchesController, type: :controller do
       batch = create :batch
       inbox = create :inbox
       create :item, batch: batch, inbox: inbox
-      get :destroy, id: batch.id
+      get :destroy, params: { id: batch.id }
       expect(response).to redirect_to(inbox)
       # Can't use be_destroyed here as we're looking at the wrong instance of batch
       expect(Batch.find_by(id:batch.id)).to be_nil

@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   validates :login, presence: true
   alias_attribute :uuid, :id
 

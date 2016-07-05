@@ -13,7 +13,7 @@ RSpec.describe Teams::InboxesController, type: :controller do
   describe "GET #index" do
     it "assigns the requested team as @team" do
       team = create :team
-      get :index, {:team_key => team.to_param}, valid_session
+      get :index, params: {:team_key => team.to_param}, session: valid_session
       expect(assigns(:team)).to eq(team)
     end
 
@@ -21,7 +21,7 @@ RSpec.describe Teams::InboxesController, type: :controller do
       team = create :team
       inbox = create :inbox
       create :team_inbox, team: team, inbox: inbox
-      get :index, {:team_key => team.to_param}, valid_session
+      get :index, params: {:team_key => team.to_param}, session: valid_session
       expect(assigns(:active_inbox)).to eq(inbox)
       expect(assigns(:active_items)).to eq(inbox.items.pending)
     end
@@ -32,7 +32,7 @@ RSpec.describe Teams::InboxesController, type: :controller do
       team = create :team
       inbox = create :inbox
       create :team_inbox, team: team, inbox: inbox
-      get :show, {:team_key => team.to_param, :key => inbox.key }, valid_session
+      get :show, params: {:team_key => team.to_param, :key => inbox.key }, session: valid_session
       expect(assigns(:team)).to eq(team)
     end
 
@@ -43,7 +43,7 @@ RSpec.describe Teams::InboxesController, type: :controller do
       pending_item = create :pending_item, inbox: inbox
       create :team_inbox, team: team, inbox: inbox, order: 0
       create :team_inbox, team: team, inbox: inbox2, order: 1
-      get :show, {:team_key => team.to_param, :key => inbox2.key}, valid_session
+      get :show, params: {:team_key => team.to_param, :key => inbox2.key}, session: valid_session
       expect(assigns(:active_inbox)).to eq(inbox2)
       expect(assigns(:active_items)).to eq(inbox2.items.pending)
     end
@@ -53,7 +53,7 @@ RSpec.describe Teams::InboxesController, type: :controller do
       inbox = create :inbox
       batched_item = create :batched_item, inbox: inbox
       create :team_inbox, team: team, inbox: inbox, order: 0
-      get :show, {:team_key => team.to_param, :key => inbox.key, :state=> 'batched'}, valid_session
+      get :show, params: {:team_key => team.to_param, :key => inbox.key, :state=> 'batched'}, session: valid_session
       expect(assigns(:active_inbox)).to eq(inbox)
       expect(assigns(:active_items)).to eq(inbox.items.batched)
     end
@@ -61,7 +61,7 @@ RSpec.describe Teams::InboxesController, type: :controller do
 
   # describe "GET #new" do
   #   it "assigns a new team as @team" do
-  #     get :new, {}, valid_session
+  #     get :new, {}, session: valid_session
   #     expect(assigns(:team)).to be_a_new(Team)
   #   end
   # end
@@ -69,7 +69,7 @@ RSpec.describe Teams::InboxesController, type: :controller do
   # describe "GET #edit" do
   #   it "assigns the requested team as @team" do
   #     team = Team.create! valid_attributes
-  #     get :edit, {:key => team.to_param}, valid_session
+  #     get :edit, {:key => team.to_param}, session: valid_session
   #     expect(assigns(:team)).to eq(team)
   #   end
   # end
@@ -78,30 +78,30 @@ RSpec.describe Teams::InboxesController, type: :controller do
   #   context "with valid params" do
   #     it "creates a new Team" do
   #       expect {
-  #         post :create, {:team => valid_attributes}, valid_session
+  #         post :create, {:team => valid_attributes}, session: valid_session
   #       }.to change(Team, :count).by(1)
   #     end
 
   #     it "assigns a newly created team as @team" do
-  #       post :create, {:team => valid_attributes}, valid_session
+  #       post :create, {:team => valid_attributes}, session: valid_session
   #       expect(assigns(:team)).to be_a(Team)
   #       expect(assigns(:team)).to be_persisted
   #     end
 
   #     it "redirects to the created team" do
-  #       post :create, {:team => valid_attributes}, valid_session
+  #       post :create, {:team => valid_attributes}, session: valid_session
   #       expect(response).to redirect_to(Team.last)
   #     end
   #   end
 
   #   context "with invalid params" do
   #     it "assigns a newly created but unsaved team as @team" do
-  #       post :create, {:team => invalid_attributes}, valid_session
+  #       post :create, {:team => invalid_attributes}, session: valid_session
   #       expect(assigns(:team)).to be_a_new(Team)
   #     end
 
   #     it "re-renders the 'new' template" do
-  #       post :create, {:team => invalid_attributes}, valid_session
+  #       post :create, {:team => invalid_attributes}, session: valid_session
   #       expect(response).to render_template("new")
   #     end
   #   end
@@ -116,7 +116,7 @@ RSpec.describe Teams::InboxesController, type: :controller do
 
   #     it "updates the requested team" do
   #       team = Team.create! valid_attributes
-  #       put :update, {:key => team.to_param, :team => new_attributes}, valid_session
+  #       put :update, {:key => team.to_param, :team => new_attributes}, session: valid_session
   #       team.reload
   #       expect(team.name).to eq('My Happier Team')
   #       expect(team.key).to eq('my-happier-team')
@@ -124,13 +124,13 @@ RSpec.describe Teams::InboxesController, type: :controller do
 
   #     it "assigns the requested team as @team" do
   #       team = Team.create! valid_attributes
-  #       put :update, {:key => team.to_param, :team => valid_attributes}, valid_session
+  #       put :update, {:key => team.to_param, :team => valid_attributes}, session: valid_session
   #       expect(assigns(:team)).to eq(team)
   #     end
 
   #     it "redirects to the team" do
   #       team = Team.create! valid_attributes
-  #       put :update, {:key => team.to_param, :team => valid_attributes}, valid_session
+  #       put :update, {:key => team.to_param, :team => valid_attributes}, session: valid_session
   #       expect(response).to redirect_to(team)
   #     end
   #   end
@@ -138,13 +138,13 @@ RSpec.describe Teams::InboxesController, type: :controller do
   #   context "with invalid params" do
   #     it "assigns the team as @team" do
   #       team = Team.create! valid_attributes
-  #       put :update, {:key => team.to_param, :team => invalid_attributes}, valid_session
+  #       put :update, {:key => team.to_param, :team => invalid_attributes}, session: valid_session
   #       expect(assigns(:team)).to eq(team)
   #     end
 
   #     it "re-renders the 'edit' template" do
   #       team = Team.create! valid_attributes
-  #       put :update, {:key => team.to_param, :team => invalid_attributes}, valid_session
+  #       put :update, {:key => team.to_param, :team => invalid_attributes}, session: valid_session
   #       expect(response).to render_template("edit")
   #     end
   #   end
@@ -154,13 +154,13 @@ RSpec.describe Teams::InboxesController, type: :controller do
   #   it "destroys the requested team" do
   #     team = Team.create! valid_attributes
   #     expect {
-  #       delete :destroy, {:key => team.to_param}, valid_session
+  #       delete :destroy, {:key => team.to_param}, session: valid_session
   #     }.to change(Team, :count).by(-1)
   #   end
 
   #   it "redirects to the teams list" do
   #     team = Team.create! valid_attributes
-  #     delete :destroy, {:key => team.to_param}, valid_session
+  #     delete :destroy, {:key => team.to_param}, session: valid_session
   #     expect(response).to redirect_to(teams_url)
   #   end
   # end

@@ -6,7 +6,7 @@ class BatchesController < ApplicationController
     if @batch.save
       redirect_to @batch, notice: t('.success')
     else
-      redirect_to :back, alert: t('.failure',errors: @batch.errors.full_messages.to_sentence)
+      redirect_back fallback_location: :root , alert: t('.failure',errors: @batch.errors.full_messages.to_sentence)
     end
   end
 
