@@ -6,6 +6,7 @@ class Batch < ApplicationRecord
 
   # In practice, this will almost always be just one inbox.
   has_many :inboxes, ->() { distinct }, through: :items
+  has_many :teams, ->() { distinct }, through: :inboxes
 
   validates :user, presence: true
   # If we don't have a user, check that we at least have a swipecard
