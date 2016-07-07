@@ -5,8 +5,9 @@ class Message
   class Subject
     attr_accessor :role_type, :subject_type, :friendly_name, :uuid
     def initialize(subject_hash)
-      [:role_type, :subject_type, :friendly_name, :uuid].each do |attribute|
-        send("#{attribute}=",subject_hash[attribute.to_s])
+      subject_hash.stringify_keys!
+      ['role_type', 'subject_type', 'friendly_name', 'uuid'].each do |attribute|
+        send("#{attribute}=",subject_hash[attribute])
       end
     end
   end
@@ -17,7 +18,10 @@ class Message
 
     def from_json(json)
       begin
-        new(JSON.parse(json))
+        parameters = JSON.parse(json)
+        extracted_event = parameters.delete('event') || raise(InvalidMessage)
+        parameters.merge!(extracted_event)
+        new(parameters)
       rescue JSON::ParserError
         raise InvalidMessage
       end
@@ -27,20 +31,19 @@ class Message
 
   extend ClassMethods
 
-  attr_reader :lims,:occured_at, :subjects
-  attr_accessor :metadata, :event_type
+  attr_reader :occured_at, :subjects
+  attr_accessor :metadata, :event_type, :lims
 
   def initialize(event_hash)
-    raise InvalidMessage if event_hash['lims'].nil? || event_hash['event'].nil?
-    @lims = event_hash['lims']
-    [:metadata,:event_type,:occured_at,:subjects].each do |attribute|
-      send("#{attribute}=",event_hash.fetch('event')[attribute.to_s])
+    event_hash.stringify_keys!
+    ['metadata','event_type','occured_at','subjects','lims'].each do |attribute|
+      send("#{attribute}=",event_hash[attribute])
     end
   end
 
   def occured_at=(date_time)
     begin
-      @occured_at = DateTime.parse(date_time)
+      @occured_at = date_time.is_a?(String) ? DateTime.parse(date_time) : date_time
     rescue ArgumentError
       raise InvalidMessage, "Unrecognised date format: #{date_time}"
     end
@@ -49,7 +52,7 @@ class Message
   def subjects=(subjects)
     raise InvalidMessage unless subjects.respond_to?(:each)
     @subjects = subjects.map do |subject|
-      Subject.new(subject)
+      subject.is_a?(Subject) ? subject : Subject.new(subject)
     end
   end
 
@@ -57,7 +60,15 @@ class Message
     metadata.fetch(key)
   end
 
+  def metadata_for(keys)
+    metadata.select {|k,v| keys.include?(k) }
+  end
+
   def subjects_with_role(role)
-    subjects.select {|s| s.role_type == role }
+    subjects_by_role[role]
+  end
+
+  def subjects_by_role
+    @subjects_by_role ||= subjects.group_by(&:role_type)
   end
 end

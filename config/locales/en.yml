@@ -66,6 +66,10 @@ en:
       team:
         key: "Name" # Translate key to name, as that's what the user actually sees
     errors:
+      messages:
+        not_hash: is not a hash
+        unknown_key: has an unrecognised key
+        invalid_content: has a key with invalid content
       models:
         team:
           record_invalid:
