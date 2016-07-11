@@ -9,6 +9,8 @@ gem 'postgresql'
 gem 'sass-rails', '~> 5.0', require: false
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0', require: false
+
+# Bootstrap-sass to make things presentable quickly
 gem 'bootstrap-sass'
 
 # Do using coffee script ourselves, but it seems that some of the standard rails assets use it.
@@ -19,6 +21,7 @@ gem 'therubyracer', platforms: :ruby, require: false
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+# We use the sortable component of jquery ui
 gem 'jquery-ui-rails'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
@@ -28,8 +31,6 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7
 
 # Use Puma as the app server
 gem 'puma', require: false
@@ -37,6 +38,11 @@ gem 'puma', require: false
 # We need to talk to a message queue, we'll use bunny
 gem 'bunny', require: false
 
+# Daemons handles forking, pid files and detaching processes necessary
+# for our rabbit consumers.
+gem 'daemons'
+
+# An alternative to sequencescape-client-api when all you need is search
 gem 'sequencescape_search', github: 'sanger/sequencescape_search'
 
 group :development, :test do

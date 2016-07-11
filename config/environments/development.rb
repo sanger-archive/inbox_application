@@ -56,4 +56,9 @@ Rails.application.configure do
   sequencescape_headers = { 'ACCEPT'=>'application/json', 'x-sequencescape-client-id'=>'development', 'Content-Type'=>' application/json'}
 
   config.api_root = Faraday.new(sequencescape_uri, proxy: proxy, headers: sequencescape_headers )
+
+  # Configure the main AMQP consumer
+  config.amqp_main_url                    = 'amqp://localhost:5672'
+  config.amqp_main_exchange               = 'psd.sequencescape'
+  config.amqp_main_routing_keys           = ['test.key']
 end

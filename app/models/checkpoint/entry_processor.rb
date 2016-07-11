@@ -1,10 +1,12 @@
 class Checkpoint::EntryProcessor < Checkpoint::Processor
   def process
-    message.subjects_with_role(subject_role).each do |subject|
-      inbox.items.create_with({
-        name: subject.friendly_name,
-        details: extract_details
-      }).find_or_create_by!(uuid: subject.uuid)
+    ActiveRecord::Base.transaction do
+      message.subjects_with_role(subject_role).each do |subject|
+        inbox.items.create_with({
+          name: subject.friendly_name,
+          details: extract_details
+        }).find_or_create_by!(uuid: subject.uuid)
+      end
     end
   end
 

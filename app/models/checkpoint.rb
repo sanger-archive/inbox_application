@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require './app/validators/hash_schema_validator'
+require_relative '../validators/hash_schema_validator'
 
 class Checkpoint < ApplicationRecord
 
@@ -9,7 +9,7 @@ class Checkpoint < ApplicationRecord
 
   serialize :conditions
 
-  belongs_to :inbox
+  belongs_to :inbox, inverse_of: :checkpoints
   validates :event_type, presence: true
   validates :subject_role, presence: true
   validates :direction, presence: true, inclusion:   { in: DIRECTIONS }

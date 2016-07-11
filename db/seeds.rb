@@ -45,5 +45,25 @@ if Rails.env == 'development'
       Item.create!(uuid: SecureRandom.uuid, name:"Completed Item #{ibi}-1",details:details,inbox:inbox,batch:b2,completed_at:Time.now)
       Item.create!(uuid: SecureRandom.uuid, name:"Completed Item #{ibi}-2",details:details,inbox:inbox,completed_at:Time.now)
     end
+
+    i1.checkpoints.create!([
+      {
+        direction: 'entry', subject_role: 'tracked', event_type: 'entry', conditions: {
+          metadata: {'test'=> {eq: 'match'}},
+          primary_details: ['Key A'],
+          secondary_details: ['Key B'],
+          primary_associations: ['untracked'],
+          secondary_associations: []
+        }
+      },{
+        direction: 'exit', subject_role: 'tracked', event_type: 'exit', conditions: {
+          metadata: {'test'=> {eq: 'this'}},
+          primary_details: ['Key A'],
+          secondary_details: ['Key B'],
+          primary_associations: ['untracked'],
+          secondary_associations: []
+        }
+      }
+    ])
   end
 end
