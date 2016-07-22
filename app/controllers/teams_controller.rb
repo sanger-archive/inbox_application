@@ -15,6 +15,7 @@ class TeamsController < ApplicationController
     @active_inbox = @team.inboxes.first
     @active_items = @active_inbox.present? ? @active_inbox.items.which_are(state_param) : []
     @state = state_param
+    @batchable = @state == 'pending'
   end
 
   # GET /teams/new

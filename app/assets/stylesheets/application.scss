@@ -2,6 +2,7 @@
 @import "bootstrap";
 @import "scaffolds";
 @import "teams";
+@import "checkpoint";
 
 .field_with_errors {
   @extend .has-error;
@@ -32,4 +33,35 @@ dl.dl-inline {
   li { display: inline; list-style: none;}
   li::after { content: ' | '; color: lightgray;}
   li:last-child::after { content: ''}
+}
+
+label.full-item {
+  display: inherit;
+  font-weight: inherit;
+  margin-bottom: inherit;
+}
+
+.full-item input[type="checkbox"] {
+  display: none;
+}
+.full-item input[type="checkbox"] + span {
+  border: 3px solid lightgray;
+  border-radius: 5px;
+  float: right;
+  width: 50px;
+  height: 50px;
+}
+
+.full-item input[type="checkbox"]:checked + span::after {
+  content: '✓';
+  margin:0 10px;
+  padding:0;
+  vertical-align: top;
+  font-size: 30px; }
+
+label.checkbox-item-label {
+  width: 100%;
+  margin-right: -50px;
+  padding-right: 55px;
+  text-align: right;
 }

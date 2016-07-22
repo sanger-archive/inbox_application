@@ -1,0 +1,10 @@
+<ol class="breadcrumb">
+  <li><%= link_to t(:teams_path,scope: :links), teams_path %></li>
+  <li><%= link_to t(:inboxes_path,scope: :links), inboxes_path %></li>
+  <li><%= link_to @inbox.name, @inbox %></li>
+  <li class="active"><%= t(:edit,scope: :links) %></li>
+</ol>
+
+<h1><%= @inbox.name %> <small><%= t('.subtitle') %></small></h1>
+
+<%= render 'form', inbox: @inbox %>

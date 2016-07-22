@@ -21,3 +21,4 @@ inbox_application.sublime-workspace
 !/log/.keep
 /tmp
 spec/examples.txt
+*.DS_Store

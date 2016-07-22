@@ -31,7 +31,9 @@ RSpec.feature 'creating a batch', js: true do
     end
 
     @items_to_select.each do |item|
-      page.check "Select #{item.name}"
+      find('label', :text => /\ASelect #{item.name}\z/).click
+      # Switch to the following as soon as we can go capybara 2.8
+      # page.check "Select #{item.name}", click_label: true
     end
 
     page.fill_in 'User swipecard', with: 'test'

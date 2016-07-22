@@ -11,6 +11,7 @@ class Teams::InboxesController < ApplicationController
     @active_inbox = @team.inboxes.first
     @active_items = @active_inbox ? @active_inbox.items.which_are(state_param) : []
     @state = state_param
+    @batchable = @state == 'pending'
     render 'teams/show'
   end
 
@@ -19,34 +20,17 @@ class Teams::InboxesController < ApplicationController
   def show
     @active_items = @active_inbox.items.which_are(state_param)
     @state = state_param
+    @batchable = @state == 'pending'
     render 'teams/show'
-  end
-
-  # GET /teams/new
-  def new
-
-  end
-
-  # GET /teams/1/edit
-  def edit
-  end
-
-  # POST /teams
-  # POST /teams.json
-  def create
-
-  end
-
-  # PATCH/PUT /teams/1
-  # PATCH/PUT /teams/1.json
-  def update
-
   end
 
   # DELETE /teams/1
   # DELETE /teams/1.json
   def destroy
-
+    # This is a has_many through, the inbox itself is not destroyed
+    # only the team_inbox association. This is the intended behaviour
+    @team.inboxes.destroy(@inbox)
+    redirect_to @team
   end
 
   private

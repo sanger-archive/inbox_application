@@ -5,7 +5,10 @@ class Checkpoint < ApplicationRecord
 
   UnknownComparison = Class.new(StandardError)
 
-  DIRECTIONS = ['entry','exit'].freeze
+  ENTRY = 'entry'
+  EXIT = 'exit'
+
+  DIRECTIONS = [ENTRY,EXIT].freeze
 
   serialize :conditions
 
@@ -21,6 +24,9 @@ class Checkpoint < ApplicationRecord
     secondary_associations: Array
   }}
 
+  scope :entry, ->() { where(direction:ENTRY ) }
+  scope :exit,  ->() { where(direction:EXIT  ) }
+
   def check(message)
     processor(message).check
   end
@@ -31,6 +37,31 @@ class Checkpoint < ApplicationRecord
 
   def processor(message)
     processor_class.new(self,message)
+  end
+
+  def metadata
+    self.conditions ||= {}
+    conditions[:metadata]
+  end
+
+  def metadata=(value)
+    self.conditions ||= {}
+    conditions[:metadata]= value
+  end
+
+  [:primary_details,:secondary_details,:primary_associations,:secondary_associations].each do |field|
+    define_method(field) do
+      self.conditions ||= {}
+      conditions.fetch(field,[])
+    end
+    define_method("#{field}=") do |value|
+      self.conditions ||= {}
+      conditions[field] = value
+    end
+    define_method("each_#{field.to_s.singularize}") do |&block|
+      self.conditions ||= {}
+      conditions.fetch(field,[]).each(&block)
+    end
   end
 
   private

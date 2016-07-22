@@ -59,110 +59,31 @@ RSpec.describe Teams::InboxesController, type: :controller do
     end
   end
 
-  # describe "GET #new" do
-  #   it "assigns a new team as @team" do
-  #     get :new, {}, session: valid_session
-  #     expect(assigns(:team)).to be_a_new(Team)
-  #   end
-  # end
+  describe "DELETE #destroy" do
+    it "removes the inbox from the requested team" do
 
-  # describe "GET #edit" do
-  #   it "assigns the requested team as @team" do
-  #     team = Team.create! valid_attributes
-  #     get :edit, {:key => team.to_param}, session: valid_session
-  #     expect(assigns(:team)).to eq(team)
-  #   end
-  # end
+      team = create :team
+      inbox = create :inbox
+      create :team_inbox, team: team, inbox: inbox
 
-  # describe "POST #create" do
-  #   context "with valid params" do
-  #     it "creates a new Team" do
-  #       expect {
-  #         post :create, {:team => valid_attributes}, session: valid_session
-  #       }.to change(Team, :count).by(1)
-  #     end
+      expect {
+        delete :destroy, params: {:team_key => team.to_param, :key => inbox.key }, session: valid_session
+      }.to change(TeamInbox, :count).by(-1)
 
-  #     it "assigns a newly created team as @team" do
-  #       post :create, {:team => valid_attributes}, session: valid_session
-  #       expect(assigns(:team)).to be_a(Team)
-  #       expect(assigns(:team)).to be_persisted
-  #     end
+      expect(team.inboxes).to_not include(inbox)
 
-  #     it "redirects to the created team" do
-  #       post :create, {:team => valid_attributes}, session: valid_session
-  #       expect(response).to redirect_to(Team.last)
-  #     end
-  #   end
+      expect(Inbox.find_by_key(inbox.key)).to_not be_nil
+    end
 
-  #   context "with invalid params" do
-  #     it "assigns a newly created but unsaved team as @team" do
-  #       post :create, {:team => invalid_attributes}, session: valid_session
-  #       expect(assigns(:team)).to be_a_new(Team)
-  #     end
+    it "redirects to the team edit page" do
 
-  #     it "re-renders the 'new' template" do
-  #       post :create, {:team => invalid_attributes}, session: valid_session
-  #       expect(response).to render_template("new")
-  #     end
-  #   end
-  # end
+      team = create :team
+      inbox = create :inbox
+      create :team_inbox, team: team, inbox: inbox
 
-  # describe "PUT #update" do
-  #   context "with valid params" do
-
-  #     let(:new_attributes) {
-  #       {name:'My Happier Team'}
-  #     }
-
-  #     it "updates the requested team" do
-  #       team = Team.create! valid_attributes
-  #       put :update, {:key => team.to_param, :team => new_attributes}, session: valid_session
-  #       team.reload
-  #       expect(team.name).to eq('My Happier Team')
-  #       expect(team.key).to eq('my-happier-team')
-  #     end
-
-  #     it "assigns the requested team as @team" do
-  #       team = Team.create! valid_attributes
-  #       put :update, {:key => team.to_param, :team => valid_attributes}, session: valid_session
-  #       expect(assigns(:team)).to eq(team)
-  #     end
-
-  #     it "redirects to the team" do
-  #       team = Team.create! valid_attributes
-  #       put :update, {:key => team.to_param, :team => valid_attributes}, session: valid_session
-  #       expect(response).to redirect_to(team)
-  #     end
-  #   end
-
-  #   context "with invalid params" do
-  #     it "assigns the team as @team" do
-  #       team = Team.create! valid_attributes
-  #       put :update, {:key => team.to_param, :team => invalid_attributes}, session: valid_session
-  #       expect(assigns(:team)).to eq(team)
-  #     end
-
-  #     it "re-renders the 'edit' template" do
-  #       team = Team.create! valid_attributes
-  #       put :update, {:key => team.to_param, :team => invalid_attributes}, session: valid_session
-  #       expect(response).to render_template("edit")
-  #     end
-  #   end
-  # end
-
-  # describe "DELETE #destroy" do
-  #   it "destroys the requested team" do
-  #     team = Team.create! valid_attributes
-  #     expect {
-  #       delete :destroy, {:key => team.to_param}, session: valid_session
-  #     }.to change(Team, :count).by(-1)
-  #   end
-
-  #   it "redirects to the teams list" do
-  #     team = Team.create! valid_attributes
-  #     delete :destroy, {:key => team.to_param}, session: valid_session
-  #     expect(response).to redirect_to(teams_url)
-  #   end
-  # end
+      delete :destroy, params: {:team_key => team.to_param, :key => inbox.key }, session: valid_session
+      expect(response).to redirect_to(team)
+    end
+  end
 
 end

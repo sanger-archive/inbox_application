@@ -1,0 +1,4 @@
+<%= link_to inbox_list, class: "list-group-item team" do %>
+ <h4><%= inbox_list.name %> <small>(<%= inbox_list.key %>)</small></h4>
+ <%= status_label(inbox_list.status) %>
+<% end %>

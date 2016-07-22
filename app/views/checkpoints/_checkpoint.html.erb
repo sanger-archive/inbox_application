@@ -1,0 +1,57 @@
+<table class='checkpoint-show checkpoint-<%= checkpoint.direction %> checkpoint-conditions'>
+  <caption><%= checkpoint.direction.titleize %> <%= t('.conditions') %></caption>
+  <thead>
+    <th><%= t('.field') %></th><th><%= t('.sub_field') %></th><th><%= t('.comparison') %></th><th><%= t('.value') %></th>
+  </thead>
+  <tbody class='conditions'>
+    <tr class="condition event-type">
+      <td class="component field" colspan=2><%= Checkpoint.human_attribute_name(:event_type) %></td>
+      <!-- <td></td> -->
+      <td class="component test">eq</td>
+      <td class="component value"><%= checkpoint.event_type %></td>
+    </tr>
+    <tr class="condition metadata">
+      <td class="component field" rowspan="<%= checkpoint.metadata.size %>"><%= Checkpoint.human_attribute_name(:metadata) %></td>
+      <% checkpoint.metadata.each do |key,comparisons| %>
+          <td class="component key" rowspan="<%= comparisons.size %>"><%= key %></td>
+          <% comparisons.each do |test,value| %>
+            <td class="component test"><%= test %></td>
+            <td class="component value"><%= value %></td>
+          <% end %>
+      <% end %>
+    </tr>
+  </tbody>
+  </table>
+  <table class='checkpoint-show checkpoint-<%= checkpoint.direction %> checkpoint-details'>
+  <caption><%= checkpoint.direction.titleize %> <%= t('.information') %></caption>
+  <thead><th><%= t('.importance') %></th><th><%= t('.associations') %></th><th><%= t('.metadata') %></th></thead>
+  <tbody class='details'>
+    <tr>
+      <th><%= t('.primary') %></th>
+      <td>
+        <ul class="list-inline"><% checkpoint.each_primary_association do |association| %>
+          <li><%= association %></li>
+        <% end %></ul>
+      </td>
+      <td>
+      <ul class="list-inline"><% checkpoint.each_primary_detail do |detail| %>
+          <li><%= detail %></li>
+        <% end %></ul>
+      </td>
+    </tr>
+    <tr>
+      <th><%= t('.secondary') %></th>
+      <td>
+        <ul class="list-inline"><% checkpoint.each_secondary_association do |association| %>
+          <li><%= association %></li>
+        <% end %></ul>
+      </td>
+      <td>
+      <ul class="list-inline"><% checkpoint.each_secondary_detail do |detail| %>
+          <li><%= detail %></li>
+        <% end %></ul>
+      </td>
+    </tr>
+  </tbody>
+
+</table>

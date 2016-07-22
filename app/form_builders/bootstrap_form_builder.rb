@@ -31,6 +31,16 @@ class BootstrapFormBuilder < ActionView::Helpers::FormBuilder
     end
   end
 
+  def file_field(field_name,options={},html_options={})
+    html_options[:class] ||= ""
+    html_options[:class] << " form-control"
+    @template.content_tag(:div,class:GROUP_CLASS) do
+      label(field_name,class:LABEL_CLASS)  +
+
+      @template.content_tag(:div,super(field_name,options),class:'col-sm-10')
+    end
+  end
+
   def submit(*args)
     options = args.detect {|a| a.respond_to?(:fetch) }
 

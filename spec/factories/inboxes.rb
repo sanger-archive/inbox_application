@@ -11,5 +11,14 @@ FactoryGirl.define do
   factory :inbox do
     name { generate :inbox_name }
     key { generate :inbox_key }
+
+    factory :full_inbox do
+      after :build do |inbox,evaluator|
+        inbox.checkpoints = [
+          build(:entry_checkpoint,inbox:inbox),
+          build(:exit_checkpoint,inbox:inbox)
+        ]
+      end
+    end
   end
 end

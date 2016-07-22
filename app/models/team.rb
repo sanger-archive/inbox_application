@@ -2,8 +2,6 @@ class Team < ApplicationRecord
 
   include KeyFromName
 
-  scope :alphabetical, ->() { order(key: :asc) }
-
   has_many :team_inboxes, ->() { order(order: :asc) }, inverse_of: :team, dependent: :destroy
   has_many :inboxes, through: :team_inboxes, inverse_of: :teams
 

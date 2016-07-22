@@ -1,0 +1,15 @@
+<ol class="breadcrumb">
+  <li><%= link_to t(:teams_path,scope: :links), teams_path %></li>
+<% if @team %>
+  <li><%= link_to @team.name, team_path(@team) %></li>
+  <li ><%= link_to t(:edit,scope: :links), edit_team_path(@team) %></li>
+<% else %>
+  <li><%= link_to t(:inboxes,scope: :links), inboxes_path %></li>
+<% end %>
+  <li class="active"><%= t(:new_inbox,scope: :links) %></li>
+</ol>
+<h1>New Inbox</h1>
+
+<%= render 'form', inbox: @inbox %>
+
+<%= link_to 'Back', inboxes_path %>

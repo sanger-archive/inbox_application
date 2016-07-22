@@ -1,0 +1,12 @@
+<%= form_for(inbox, builder: BootstrapFormBuilder, html:{class:'form-horizontal form-team'} ) do |f| %>
+ <%= render partial: 'error_report', locals: {record: inbox } %>
+  <div class="field">
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.file_field :configuration, accept: 'application/json' %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

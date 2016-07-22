@@ -17,4 +17,6 @@
 //= require jquery-ui/droppable
 //= require jquery-ui/sortable
 //= require bootstrap/dropdown
+//= require bootstrap/tooltip
+//= require bootstrap/popover
 //= require_tree .

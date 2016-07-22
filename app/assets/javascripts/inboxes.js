@@ -1,0 +1,3 @@
+$(function(){
+  $('.label-inbox').popover();
+});

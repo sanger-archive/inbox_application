@@ -1,16 +1,18 @@
 <%= form_for [inbox,Batch.new], html: { class: 'form-inline' } do |f| %>
   <section class="inbox-panel">
     <ul id="item-list" class="list-group">
-      <%= render partial: "items/item", collection: items, locals: { form: f } %>
+      <%= render partial: "items/item", collection: items, locals: { form: f, batchable: @batchable } %>
     </ul>
   </section>
-  <section class="accessible-panel">
-    <div class='form-group'>
-    <%= f.label :user_swipecard %>
-    <%= f.password_field :user_swipecard, class: 'form-control' %>
-    </div>
-    <div class='form-group'>
-      <%= f.submit class: 'btn btn-success' %>
-    </div>
-  </section>
+  <% if @batchable %>
+    <section class="accessible-panel">
+      <div class='form-group'>
+      <%= f.label :user_swipecard %>
+      <%= f.password_field :user_swipecard, class: 'form-control' %>
+      </div>
+      <div class='form-group'>
+        <%= f.submit class: 'btn btn-success' %>
+      </div>
+    </section>
+  <% end %>
 <% end %>

@@ -11,5 +11,12 @@ FactoryGirl.define do
       primary_associations: ['sender'],
       secondary_associations: ['recipient']
     })
+
+    factory :entry_checkpoint do
+    end
+
+    factory :exit_checkpoint do
+      direction 'exit'
+    end
   end
 end

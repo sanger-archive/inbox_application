@@ -4,7 +4,8 @@ Rails.application.routes.draw do
   root 'teams#index'
 
   resources :teams, param: :key do
-    resources :inboxes, param: :key, controller: 'teams/inboxes'
+    resources :inboxes, param: :key, only: [:new,:create,:edit,:update]
+    resources :inboxes, param: :key, controller: 'teams/inboxes', only: [:index,:show,:destroy]
   end
 
   resources :inboxes, param: :key do

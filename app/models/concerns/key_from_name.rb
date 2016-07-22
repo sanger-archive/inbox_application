@@ -4,6 +4,7 @@ module KeyFromName
     base.before_validation :generate_key, if: :name_changed?
     base.validates :key, presence: true, uniqueness: true
     base.validates :name, format: { with: /[a-zA-Z0-9]+/ }
+    base.scope :alphabetical, ->() { order(key: :asc) }
   end
 
   def to_param; key; end

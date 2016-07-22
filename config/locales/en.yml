@@ -32,14 +32,59 @@ en:
       notice: 'Great!'
       alert: 'Sorry, there were some problems...'
       unknown: 'Notice'
+  checkpoints:
+    checkpoint:
+      field: Field
+      sub_field: Sub-field
+      comparison: Comparison
+      value: Value
+      importance: Importance
+      associations: Associated Items
+      metadata: Metadata
+      primary: Primary
+      secondary: Secondary
+  inboxes:
+    status:
+      active:
+        title: Active
+        help: This inbox is fully activated. It belongs to at least one team and has entry and exit criteria.
+      inactive:
+        title: Inactive
+        help: This inbox has no entry or exit criteria. No items will be added or removed.
+      deprecated:
+        title: Deprecated
+        help: This inbox is unused, and has no entry or exit criteria associated with it.
+      detached:
+        title: Detached
+        help: This inbox is still being filled or emptied, but isn't associated with a particular team.
+      exitless:
+        title: Exitless
+        help: This inbox has no exit criteria configured. Items will still enter it, but will never leave.
+      draining:
+        title: Draining
+        help: This inbox has no entry criteria configured. Existing items may leave, but no new items will enter.
+    index:
+      subtitle: Overview
+      guide: |
+        This page lists all configured inboxes. This page is mainly intended to be used when configuring new inboxes,
+        or monitoring which ones are being used. It won't be all that useful in day to day operations. Click an inbox to see more information.
+    new:
+      subtitle: New
+    show:
+      used_by: 'This inbox is currently used by the following teams:'
+    edit:
+      subtitle: Editing
   links:
     teams_path: 'All Teams'
+    inbox_path: 'All Inboxes'
     edit: 'Edit'
     new: 'New'
+    export: 'Export'
   teams:
     index:
       pick_a_team: "Teams have their own collection of inboxes, which will show as separate tabs. Click a team below to view their inboxes."
       new_team: "Add a new team"
+      inboxes_index: "Inbox Overview"
     edit_prompt:
       title: There's nothing here...
       body: |
@@ -52,6 +97,9 @@ en:
       other_inboxes: Other Inboxes
       other_inboxes_help: This column lists inboxes not currently associated with your team. Drag them into the 'Team Inboxes' column to add them to the list.
       update_inboxes: Update Inboxes
+      add_inbox: Add New Inbox
+    edit:
+      subtitle: Edititng
   batches:
     destroy:
       success: 'Your batch has been destroyed and the items returned to the inbox'

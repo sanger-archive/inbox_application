@@ -1,0 +1,90 @@
+table.checkpoint-show {
+  width: 100%;
+  padding: 0;
+  margin-bottom: 1em;
+
+  caption {
+    margin: 0; padding: 10px;
+    width: 100%;
+    background: rgba(1,1,1,0.1);
+    font-weight: bolder;
+  }
+
+  thead {
+    border-top: 2px solid rgba(0,0,0,0.05);
+    border-bottom: 2px solid rgba(0,0,0,0.05);
+  }
+
+
+  td {
+    padding: 10px;
+    border-right: 2px solid rgba(0,0,0,0.05);
+  }
+
+  th {
+    padding: 10px;
+    border-right: 2px solid rgba(0,0,0,0.05);
+  }
+
+  tr {
+    border-bottom: 2px solid rgba(0,0,0,0.05);
+  }
+
+  tr:last-child {
+    border-bottom: 0;
+  }
+
+  td:last-child {
+    border-bottom: 0;
+  }
+
+  .field { width: 20%;}
+  .key { width: 20%; }
+  .test { width: 10%; }
+  .value { width: 40%; }
+}
+
+table.checkpoint-conditions {
+  margin-bottom: 0;
+
+  caption {
+    border-top-left-radius: $border-radius-large;
+    border-top-right-radius: $border-radius-large;
+  }
+}
+
+table.checkpoint-details {
+  border-bottom-left-radius: $border-radius-large;
+  border-bottom-right-radius: $border-radius-large;
+  margin-top: 0;
+}
+
+
+table.checkpoint-exit {
+  color: #fff;
+  background: $brand-danger;
+
+  caption{
+    color: #fff;
+    background: darken($brand-danger, 5%);
+  }
+
+  caption::before {
+    content: '📤 ';
+  }
+
+}
+table.checkpoint-entry {
+  color: #fff;
+  background: $brand-success;
+
+  caption{
+    color: #fff;
+    background: darken($brand-success, 5%);
+  }
+
+  caption::before {
+    content: '📥 ';
+  }
+
+}

@@ -1,0 +1,30 @@
+<ol class="breadcrumb">
+  <li><%= link_to t(:teams_path,scope: :links), teams_path %></li>
+  <li class="active"><%= t(:inboxes_index,scope: :links) %></li>
+</ol>
+<p id="notice"><%= notice %></p>
+
+<h1><%= Inbox.model_name.human.pluralize %> <small><%= t('.subtitle') %></small></h1>
+
+<section class="<%= Team.model_name.element %>-list-section">
+<% if @inboxes.empty? %>
+  <%= render partial: 'creation_prompt', locals: { model_name: Inbox.model_name.human(count: 2), creation_link: new_inbox_path } %>
+<% else %>
+<% count = @inboxes.count %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title"><%= Inbox.model_name.human(count: count) %> <span class="badge"><%= count %></span></h3>
+    </div>
+    <div class="panel-body">
+      <p><%= t('.guide') %></p>
+    </div>
+    <div class="team-list list-group">
+      <%= render(partial:'inbox_list', collection: @inboxes) %>
+    </div>
+    <div class="panel-footer">
+      <%= link_to t('.new_inbox'), new_inbox_path, class:'btn btn-default' %>
+    </div>
+  </div>
+<% end %>
+</section>
+

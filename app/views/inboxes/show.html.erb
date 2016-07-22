@@ -1,0 +1,21 @@
+<ol class="breadcrumb">
+  <li><%= link_to t(:teams_path,scope: :links), teams_path %></li>
+  <li><%= link_to t(:inboxes_index,scope: :links), inboxes_path %></li>
+  <li class="active"><%= @inbox.name %></li>
+</ol>
+<h1><%= @inbox.name %> <small>(<%= @inbox.key %>)</small></h1>
+<h2><%= Team.model_name.human.pluralize %></h2>
+<div class='row'>
+  <div class='col-sm-6'>
+    <%= t('.used_by') %>
+    <ul class='list-inline'><% @inbox.teams.each do |team| %>
+    <li><%= link_to team.name, team %></li>
+    <% end %></ul>
+  </div>
+  <div class='col-sm-6'>
+    <%= link_to t(:export,scope: :links), inbox_path(@inbox, format: :json, download:true), download:"#{@inbox.timestamped_key}.json",class: 'btn btn-info btn-lg' %>
+    <%= link_to t(:edit,scope: :links), edit_inbox_path(@inbox), class: 'btn btn-default btn-lg' %>
+  </div>
+</div>
+<h2><%= Checkpoint.model_name.human.pluralize %></h2>
+<%= render @inbox.checkpoints %>

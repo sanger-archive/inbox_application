@@ -8,7 +8,7 @@ class TeamInbox < ApplicationRecord
   validates :team, presence: true
   validates :inbox, presence: true
 
-  delegate :name, :key, to: :inbox
+  delegate :name, :key, :status, to: :inbox
 
   def key=(key)
     self.inbox = Inbox.where(key:key).first

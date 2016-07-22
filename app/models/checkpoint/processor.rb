@@ -15,10 +15,10 @@ class Checkpoint::Processor
     return false unless message.event_type == event_type
     conditions.fetch(:metadata,[]).all? do |key,comparison_value|
       comparison_value.all? do |comparison,value|
-        case comparison
-        when :eq
+        case comparison.to_s
+        when 'eq'
           message.fetch_metadata(key) == value
-        when :in
+        when 'in'
           value.include?(message.fetch_metadata(key))
         else
           raise UnknownComparison, "Unknown comparison: #{comparison}"

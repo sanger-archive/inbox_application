@@ -29,4 +29,12 @@ $(function(){
     }
   });
   $('#edit-inbox-list,#other-inbox-list').disableSelection();
+
+  $('input.checkbox-item').on('change',function(){
+    if (this.checked) {
+      $(this).closest('.list-item').addClass('list-group-item-success');
+    } else {
+      $(this).closest('.list-item').removeClass('list-group-item-success');
+    }
+  })
 })
