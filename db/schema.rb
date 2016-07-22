@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160706082700) do
+ActiveRecord::Schema.define(version: 20160722124904) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,8 @@ ActiveRecord::Schema.define(version: 20160706082700) do
     t.datetime "completed_at"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.index ["batch_id"], name: "index_items_on_batch_id", using: :btree
+    t.index ["inbox_id", "completed_at", "batch_id"], name: "index_items_on_inbox_id_and_completed_at_and_batch_id", using: :btree
   end
 
   create_table "team_inboxes", force: :cascade do |t|
@@ -80,6 +82,8 @@ ActiveRecord::Schema.define(version: 20160706082700) do
 
   add_foreign_key "batches", "users"
   add_foreign_key "checkpoints", "inboxes"
+  add_foreign_key "items", "batches"
+  add_foreign_key "items", "inboxes"
   add_foreign_key "team_inboxes", "inboxes"
   add_foreign_key "team_inboxes", "teams"
 end
